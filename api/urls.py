@@ -17,6 +17,9 @@ from xml.etree.ElementInclude import include
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
+
+# schema_view = get_swagger_view(title='Sassty API Documentation')
 
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
@@ -24,5 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include('products.urls')),
     path('docs/', include_docs_urls(title="Sassty API documentation")),
+    # path('docs/', schema_view)
 ]
 
