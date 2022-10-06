@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-*ez$4%n%sdtn#zb3u%m!nmva)-$4f5efo=ezm!l^k@3s@@+sg^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://127.0.0.1:3000', '.herokuapp.com', 'http://localhost:3000']
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost']
 
 CORS_ORIGIN_ALLOW_ALL = False
 
@@ -38,8 +38,6 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:3000"
 ]
-
-
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
@@ -58,7 +56,8 @@ INSTALLED_APPS = [
     'products',
     'django.contrib.admindocs',
     'whitenoise.runserver_nostatic',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
