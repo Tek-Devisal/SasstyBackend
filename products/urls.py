@@ -16,7 +16,7 @@ Including another URLconf
 from xml.etree.ElementInclude import include
 from django.contrib import admin
 from django.urls import path, include
-from products.views import addProduct, fetchAllStock, fetchCategories, fetchCategory, addCategory, addSubCategory, fetchProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchStockForSpecificProduct
+from products.views import fetchAllStock, fetchCategories, fetchCategory, fetchFiveRandomProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchStockForSpecificProduct, fetchDailyDealProducts, lastestProducts, trendingItems
 
 from rest_framework.urlpatterns import format_suffix_patterns
 version = 'v1/'
@@ -26,13 +26,20 @@ urlpatterns = [
     path(version + 'fetchCategories/', fetchCategories), 
     path(version + 'fetchCategory/<int:id>', fetchCategory),
 
-    path(version + 'addCategory', addCategory), 
-    path(version + 'addSubCategory', addSubCategory),
+    # path(version + 'addCategory', addCategory), 
+    # path(version + 'addSubCategory', addSubCategory),
     path(version + 'fetchSubCategories/', fetchSubCategories),
     path(version + 'fetchSubCategory/<int:id>', fetchSubCategoriesForSpecificCategory),
-    path(version + 'addProduct', addProduct),
-    path(version + 'fetchProducts/<int:type>', fetchProducts),
+    # path(version + 'addProduct', addProduct),
+    # path(version + 'fetchProducts/<int:type>', fetchProducts),
 
+    #PRODUCTS 
+    path(version + 'fetchDailyProducts/', fetchDailyDealProducts),
+    path(version + 'fetchFiveRandomProducts/<int:number_of_items>', fetchFiveRandomProducts),
+    path(version + 'lastestProducts/<int:number_of_items>', lastestProducts),
+    path(version + 'trendingItems/<int:number_of_items>', trendingItems),
+
+    #STOCK
     path(version + 'fetchAllStock', fetchAllStock),
     path(version + 'fetchStockForSpecificProduct/<int:id>', fetchStockForSpecificProduct)
 

@@ -1,6 +1,6 @@
 from dataclasses import field
 from rest_framework import serializers
-from .models import Categories, Products, Stock, SubCategories
+from .models import Categories, ProductStatus, Products, ShowProductAs, Stock, SubCategories, ProductStatus
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,6 +12,17 @@ class SubCategorySerializer(serializers.ModelSerializer):
     class Meta: 
         model = SubCategories
         fields = ['id', 'category_id', 'name']
+
+class StatusSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = ProductStatus
+        fields = ['id', 'name']
+
+
+class ShowProductAsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShowProductAs
+        fields = ['id', 'name']
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
