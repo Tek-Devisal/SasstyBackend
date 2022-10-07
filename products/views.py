@@ -1,5 +1,5 @@
-from .models import Categories, Products, Stock, SubCategories
-from products.serializers import CategorySerializer, ProductSerializer, StockSerializer, SubCategorySerializer
+from .models import Categories, Products, SubCategories
+from products.serializers import CategorySerializer, ProductSerializer, SubCategorySerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -85,9 +85,21 @@ def fetchSubCategoriesForSpecificCategory(request, id, format=None):
 
 #PRODUCTS
 @api_view(['GET'])
+def fetchProductForSpecificCategory(request, sub_category_id):
+    try:
+        products = Products.objects.all().filter(sub_category_id=sub_category_id)
+    except Products.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method  == 'GET':
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET'])
 def fetchDailyDealProducts(request, format=None):
     try:
-        product = Products.objects.all().filter(show_for=1).order_by('?')[:4]
+        product = Products.objects.all().filter(show_for=1, status = 1).order_by('?')[:4]
     except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -98,7 +110,7 @@ def fetchDailyDealProducts(request, format=None):
 @api_view(['GET'])
 def fetchSpecificNumberofDailyDealProducts(request, number_of_items, format=None):
     try:
-        product = Products.objects.all().filter(show_for=1).order_by('?')[:number_of_items]
+        product = Products.objects.all().filter(show_for=1, status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -109,7 +121,7 @@ def fetchSpecificNumberofDailyDealProducts(request, number_of_items, format=None
 @api_view(['GET'])
 def fetchRandomProducts(request, number_of_items, format=None):
     try:
-        product = Products.objects.all().order_by('?')[:number_of_items]
+        product = Products.objects.all().filter(status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -120,7 +132,7 @@ def fetchRandomProducts(request, number_of_items, format=None):
 @api_view(['GET'])
 def lastestProducts(request, number_of_items, format=None):
     try:
-        product = Products.objects.all().filter(show_for=2).order_by('?')[:number_of_items]
+        product = Products.objects.all().filter(show_for=2, status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -131,7 +143,7 @@ def lastestProducts(request, number_of_items, format=None):
 @api_view(['GET'])
 def trendingItems(request, number_of_items, format=None):
     try:
-        product = Products.objects.all().filter(show_for=3).order_by('?')[:number_of_items]
+        product = Products.objects.all().filter(show_for=3, status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -142,7 +154,7 @@ def trendingItems(request, number_of_items, format=None):
 @api_view(['GET'])
 def topRatedProducts(request, number_of_items, format=None):
     try:
-        product = Products.objects.all().filter(show_for=4).order_by('?')[:number_of_items]
+        product = Products.objects.all().filter(show_for=4, status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -161,43 +173,3 @@ def topRatedProducts(request, number_of_items, format=None):
 #             serializer.save()
 
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-
-#STOCK
-# @api_view(['POST'])
-# def addStock(request, format=None):
-#     if request.method == 'POST':
-
-#         serializer = StockSerializer(data=request.data)
-
-#         if serializer.is_valid():
-#             serializer.save()
-
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-@api_view(['GET'])
-def fetchAllStock(request, format=None):
-    if request.method == 'GET':
-
-        #get all stock
-        stock = Stock.objects.all()
-
-        #serialize stock
-        serializer = StockSerializer(stock, many=True)
-
-        #return json
-        return Response(serializer.data)
-
-
-@api_view(['GET'])
-def fetchStockForSpecificProduct(request, id, format=None):
-    try:
-        stock = Stock.objects.all().filter(product_id=id)
-    except Stock.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method  == 'GET':
-        serializer = StockSerializer(stock, many=True)
-        return Response(serializer.data)

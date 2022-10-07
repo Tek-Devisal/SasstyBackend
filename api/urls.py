@@ -10,6 +10,7 @@ from drf_yasg.views import get_schema_view as swagger_get_schema_view
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 schema_view = swagger_get_schema_view(
     openapi.Info(
         title="Posts API",
@@ -25,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', include('products.urls')),
     path('ads/', include('ads.urls')),
+    path('stock/', include('stock.urls')),
 
     # path('docs/', include_docs_urls(title="Sassty API documentation")),
     # path('docs/', schema_view)

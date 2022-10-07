@@ -1,6 +1,7 @@
 from django.contrib import admin
 from ads.models import Ads
-from products.models import Categories, ProductStatus, Products, ShowProductAs, Stock, SubCategories
+from products.models import Categories, ProductStatus, Products, ShowProductAs, SubCategories
+from stock.models import Stock
 
 admin.site.register(Categories)
 admin.site.register(SubCategories)
