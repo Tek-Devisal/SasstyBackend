@@ -4,6 +4,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from rest_framework import status
+from random import shuffle
+
 
 @api_view(['GET'])
 def fetchCategories(request, format=None):
@@ -31,28 +33,28 @@ def fetchCategory(request, id, format=None):
             return Response(serializer.data)
 
 
-@api_view(['POST'])
-def addCategory(request, format=None):
-    if request.method == 'POST':
+# @api_view(['POST'])
+# def addCategory(request, format=None):
+#     if request.method == 'POST':
 
-        serializer = CategorySerializer(data=request.data)
+#         serializer = CategorySerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['POST'])
-def addSubCategory(request, format=None):
-     if request.method == 'POST':
+# @api_view(['POST'])
+# def addSubCategory(request, format=None):
+#      if request.method == 'POST':
 
-        serializer = SubCategorySerializer(data=request.data)
+#         serializer = SubCategorySerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])
@@ -83,7 +85,7 @@ def fetchSubCategoriesForSpecificCategory(request, id, format=None):
 
 #PRODUCTS
 @api_view(['GET'])
-def fetchProducts(request, type, format=None):
+def fetchDailyDealProducts(request, format=None):
     try:
         product = Products.objects.all().filter(show_for=1).order_by('?')[:4]
     except Products.DoesNotExist:
@@ -138,29 +140,30 @@ def topRatedProducts(request, number_of_items, format=None):
         return Response(serializer.data)
 
 
-@api_view(['POST'])
-def addProduct(request, format=None):
-    if request.method == 'POST':
+# @api_view(['POST'])
+# def addProduct(request, format=None):
+#     if request.method == 'POST':
 
-        serializer = ProductSerializer(data=request.data)
+#         serializer = ProductSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 #STOCK
-@api_view(['POST'])
-def addStock(request, format=None):
-    if request.method == 'POST':
+# @api_view(['POST'])
+# def addStock(request, format=None):
+#     if request.method == 'POST':
 
-        serializer = StockSerializer(data=request.data)
+#         serializer = StockSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])
