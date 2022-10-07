@@ -85,7 +85,8 @@ def fetchSubCategoriesForSpecificCategory(request, id, format=None):
 @api_view(['GET'])
 def fetchProducts(request, type, format=None):
     try:
-        product = Products.objects.all().filter(show_for=type)
+        # product = Products.objects.all().filter(show_for=type)
+        product = Products.objects.all().filter(show_for=type).order_by('?')[-4:]
     except SubCategories.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
