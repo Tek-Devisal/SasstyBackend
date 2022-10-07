@@ -96,7 +96,7 @@ def fetchDailyDealProducts(request, format=None):
         return Response(serializer.data)
 
 @api_view(['GET'])
-def fetchFiveRandomProducts(request, number_of_items, format=None):
+def fetchRandomProducts(request, number_of_items, format=None):
     try:
         product = Products.objects.all().order_by('?')[:number_of_items]
     except Products.DoesNotExist:
@@ -121,6 +121,17 @@ def lastestProducts(request, number_of_items, format=None):
 def trendingItems(request, number_of_items, format=None):
     try:
         product = Products.objects.all().filter(show_for=3).order_by('?')[:number_of_items]
+    except Products.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method  == 'GET':
+        serializer = ProductSerializer(product, many=True)
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def topRatedProducts(request, number_of_items, format=None):
+    try:
+        product = Products.objects.all().filter(show_for=4).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

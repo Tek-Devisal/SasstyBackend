@@ -16,7 +16,7 @@ Including another URLconf
 from xml.etree.ElementInclude import include
 from django.contrib import admin
 from django.urls import path, include
-from products.views import fetchAllStock, fetchCategories, fetchCategory, fetchFiveRandomProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchStockForSpecificProduct, fetchDailyDealProducts, lastestProducts, trendingItems
+from products.views import fetchAllStock, fetchCategories, fetchCategory, fetchRandomProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchStockForSpecificProduct, fetchDailyDealProducts, lastestProducts, topRatedProducts, trendingItems
 
 from rest_framework.urlpatterns import format_suffix_patterns
 version = 'v1/'
@@ -35,9 +35,10 @@ urlpatterns = [
 
     #PRODUCTS 
     path(version + 'fetchDailyProducts/', fetchDailyDealProducts),
-    path(version + 'fetchFiveRandomProducts/<int:number_of_items>', fetchFiveRandomProducts),
+    path(version + 'fetchRandomProducts/<int:number_of_items>', fetchRandomProducts),
     path(version + 'lastestProducts/<int:number_of_items>', lastestProducts),
     path(version + 'trendingItems/<int:number_of_items>', trendingItems),
+    path(version + 'topRatedProducts/<int:number_of_items>', topRatedProducts),
 
     #STOCK
     path(version + 'fetchAllStock', fetchAllStock),
