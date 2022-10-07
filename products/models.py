@@ -42,9 +42,9 @@ class Products(models.Model):
     description = models.CharField(max_length=1000, null=False)
     prize = models.FloatField(max_length=50, null=False)
     discount = models.IntegerField(null=False)
-    img_1 = models.ImageField(blank=False, default="", upload_to="../images/products/")
-    img_2 = models.ImageField(blank=True, default="", upload_to="../images/products/")
-    img_3 = models.ImageField(blank=True, default="", upload_to="../images/products/")
+    img_1 = models.ImageField(blank=False, default="", upload_to="images/products/")
+    img_2 = models.ImageField(blank=True, default="", upload_to="images/products/")
+    img_3 = models.ImageField(blank=True, default="", upload_to="images/products/")
 
     def __str__(self):
         return '{} - {}'.format(self.pk, self.name)

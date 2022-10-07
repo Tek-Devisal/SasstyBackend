@@ -18,7 +18,6 @@ class StatusSerializer(serializers.ModelSerializer):
         model = ProductStatus
         fields = ['id', 'name']
 
-
 class ShowProductAsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShowProductAs
