@@ -7,7 +7,7 @@ from ads.models import Ads
 from ads.serializers import AdsSerializer
 
 @api_view(['GET'])
-def fetchAds(request, number_of_ads, format=None):
+def fetchAds(request, number_of_ads):
     try:
         ads = Ads.objects.all().order_by('?')[:number_of_ads]
 

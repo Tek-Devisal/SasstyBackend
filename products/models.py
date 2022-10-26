@@ -1,5 +1,6 @@
 from email.policy import default
 from enum import unique
+from tabnanny import verbose
 from django.db import models
 from django.contrib import admin
 
@@ -42,6 +43,10 @@ class ShowProductAs(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.pk, self.name)
 
+    class Meta:
+        verbose_name = "Show Product As"
+        verbose_name_plural = "Show Products As"
+
 class Products(models.Model):
     vendor_id = models.IntegerField(null=False)
     # vendor_id = models.ForeignKey(Categories, on_delete=models.CASCADE, null=False)
@@ -61,3 +66,6 @@ class Products(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.pk, self.name)
 
+    class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
