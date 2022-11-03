@@ -11,6 +11,8 @@ from rest_framework.permissions import AllowAny, IsAdminUser
  
 @api_view(['GET'])
 def fetchCategories(request, format=None):
+    permission_classes = [AllowAny]
+
     if request.method == 'GET':
         permission_classes = [AllowAny]
 
@@ -125,6 +127,8 @@ def fetchProductForSpecificCategory(request, sub_category_id):
 
 @api_view(['GET'])
 def fetchDailyDealProducts(request, format=None):
+    permission_classes = [AllowAny]
+
     try:
         product = Products.objects.all().filter(show_for=1, status = 1).order_by('?')[:4]
     except Products.DoesNotExist:
@@ -147,6 +151,8 @@ def fetchSpecificNumberofDailyDealProducts(request, number_of_items, format=None
 
 @api_view(['GET'])
 def fetchRandomProducts(request, number_of_items, format=None):
+    permission_classes = [AllowAny]
+
     try:
         product = Products.objects.all().filter(status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
@@ -169,6 +175,8 @@ def lastestProducts(request, number_of_items, format=None):
 
 @api_view(['GET'])
 def trendingItems(request, number_of_items, format=None):
+    permission_classes = [AllowAny]
+
     try:
         product = Products.objects.all().filter(show_for=3, status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
@@ -180,6 +188,8 @@ def trendingItems(request, number_of_items, format=None):
 
 @api_view(['GET'])
 def topRatedProducts(request, number_of_items, format=None):
+    permission_classes = [AllowAny]
+
     try:
         product = Products.objects.all().filter(show_for=4, status = 1).order_by('?')[:number_of_items]
     except Products.DoesNotExist:
