@@ -24,6 +24,7 @@ def fetchCategories(request, format=None):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchCategory(request, id, format=None):
         try:
             category = Categories.objects.get(pk=id)
@@ -60,6 +61,7 @@ def fetchCategory(request, id, format=None):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchSubCategories(request, format=None):
     if request.method == 'GET':
 
@@ -74,6 +76,7 @@ def fetchSubCategories(request, format=None):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchSubCategoriesForSpecificCategory(request, id, format=None):
         try:
             sub_category = SubCategories.objects.all().filter(category_id=id)
@@ -87,6 +90,7 @@ def fetchSubCategoriesForSpecificCategory(request, id, format=None):
 
 #PRODUCTS
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchAllProduct(request):
     try:
         products = Products.objects.all()
@@ -99,6 +103,7 @@ def fetchAllProduct(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchSpecificProduct(request, product_id):
     try:
         products = Products.objects.all().filter(pk=product_id)
@@ -111,6 +116,7 @@ def fetchSpecificProduct(request, product_id):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchProductForSpecificCategory(request, sub_category_id):
     try:
         products = Products.objects.all().filter(sub_category_id=sub_category_id)
@@ -123,6 +129,7 @@ def fetchProductForSpecificCategory(request, sub_category_id):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchDailyDealProducts(request, format=None):
     permission_classes = [AllowAny]
 
@@ -136,6 +143,7 @@ def fetchDailyDealProducts(request, format=None):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchSpecificNumberofDailyDealProducts(request, number_of_items, format=None):
     try:
         product = Products.objects.all().filter(show_for=1, status = 1).order_by('?')[:number_of_items]
@@ -147,6 +155,7 @@ def fetchSpecificNumberofDailyDealProducts(request, number_of_items, format=None
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def fetchRandomProducts(request, number_of_items, format=None):
     permission_classes = [AllowAny]
 
@@ -160,6 +169,7 @@ def fetchRandomProducts(request, number_of_items, format=None):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def lastestProducts(request, number_of_items, format=None):
     try:
         product = Products.objects.all().filter(show_for=2, status = 1).order_by('?')[:number_of_items]
@@ -171,6 +181,7 @@ def lastestProducts(request, number_of_items, format=None):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def trendingItems(request, number_of_items, format=None):
     permission_classes = [AllowAny]
 
@@ -184,6 +195,7 @@ def trendingItems(request, number_of_items, format=None):
         return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def topRatedProducts(request, number_of_items, format=None):
     permission_classes = [AllowAny]
 
