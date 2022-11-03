@@ -1,20 +1,17 @@
-# from email.policy import default
-# from enum import unique
-# from tabnanny import verbose
-# from django.db import models
-# from django.contrib import admin
+from django.db import models
+from django.contrib.auth import get_user_model
 
-# class Users(models.Model):
-#     profile_image = models.ImageField(blank=False, default="", upload_to="images/users/")
-#     name = models.CharField(max_length=500, null=False)
-#     email = models.EmailField(max_length=500, null=False)
-#     address = models.CharField(max_length=500, null=False)
-#     phone = models.CharField(max_length=500, null=False)
-#     password = models.CharField(max_length=500, null=False)
+User = get_user_model()
 
-#     def __str__(self):
-#         return self.name
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_image = models.ImageField(blank=False, default="", upload_to="images/users/")
+    address = models.CharField(max_length=500, null=False)
+    phone = models.CharField(max_length=500, null=False)
 
-#     class Meta:
-#         verbose_name = "User"
-#         verbose_name_plural = "Users"
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"

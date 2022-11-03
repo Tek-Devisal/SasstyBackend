@@ -26,10 +26,12 @@ urlpatterns = [
     path('ads/', include('ads.urls')),
     path('stock/', include('stock.urls')),
     path('users/', include('users.urls')),
+    path('cart/', include('cart.urls')),
+    path('orders/', include('orders.urls')),
 
     # path('docs/', include_docs_urls(title="Sassty API documentation")),
     # path('docs/', schema_view)
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name="swagger-schema"),
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name="swagger-schema",),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

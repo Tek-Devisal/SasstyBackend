@@ -33,8 +33,6 @@ CSRF_TRUSTED_ORIGINS = [
 
 # CORS_ORIGIN_ALLOW_ALL = True
 
-
-
 CORS_ALLOW_METHODS = (
     'DELETE',
     'GET',
@@ -56,7 +54,16 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
 )
 
-REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+REST_FRAMEWORK = { 
+    'DEFAULT_SCHEMA_CLASS': 
+        'rest_framework.schemas.coreapi.AutoSchema', 
+    'DEFAULT_PERMISSION_CLASSES': 
+        ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        ],
+}
 
 # Application definition
 
@@ -74,10 +81,13 @@ INSTALLED_APPS = [
     'products',
     'stock',
     'users',
+    'cart',
+    'orders',
     'django.contrib.admindocs',
     'whitenoise.runserver_nostatic',
     'rest_framework_swagger',
-    'drf_yasg'
+    'drf_yasg',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [

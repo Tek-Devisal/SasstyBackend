@@ -85,6 +85,30 @@ def fetchSubCategoriesForSpecificCategory(request, id, format=None):
 
 #PRODUCTS
 @api_view(['GET'])
+def fetchAllProduct(request):
+    try:
+        products = Products.objects.all()
+    except Products.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method  == 'GET':
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET'])
+def fetchSpecificProduct(request, product_id):
+    try:
+        products = Products.objects.all().filter(pk=product_id)
+    except Products.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method  == 'GET':
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET'])
 def fetchProductForSpecificCategory(request, sub_category_id):
     try:
         products = Products.objects.all().filter(sub_category_id=sub_category_id)

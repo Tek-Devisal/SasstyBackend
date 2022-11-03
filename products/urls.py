@@ -2,14 +2,11 @@ from xml.etree.ElementInclude import include
 from django.contrib import admin
 from constants import api_version
 from django.urls import path, include
-from products.views import fetchCategories, fetchCategory, fetchProductForSpecificCategory, fetchRandomProducts, fetchSpecificNumberofDailyDealProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchDailyDealProducts, lastestProducts, topRatedProducts, trendingItems
+from products.views import fetchCategories, fetchCategory, fetchProductForSpecificCategory, fetchRandomProducts, fetchSpecificNumberofDailyDealProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchDailyDealProducts, lastestProducts, topRatedProducts, trendingItems, fetchSpecificProduct, fetchAllProduct
 
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    #ADMIN
-    path('admin/', admin.site.urls),
-
     #CATEGORIES
     path(api_version + 'fetchCategories/', fetchCategories), 
     path(api_version + 'fetchCategory/<int:id>', fetchCategory),
@@ -19,10 +16,12 @@ urlpatterns = [
     path(api_version + 'fetchSubCategories/', fetchSubCategories),
     path(api_version + 'fetchSubCategory/<int:id>', fetchSubCategoriesForSpecificCategory),
     # path(version + 'addProduct', addProduct),
-    # path(version + 'fetchProducts/<int:type>', fetchProducts),
+    path(api_version + 'fetchAllProducts/', fetchAllProduct),
 
 
     #PRODUCTS 
+    
+    path(api_version + 'fetchSpecificProduct/<int:product_id>', fetchSpecificProduct),
     path(api_version + 'fetchProductForSpecificSubCategory/<int:sub_category_id>', fetchProductForSpecificCategory),
     path(api_version + 'fetchDailyProducts/', fetchDailyDealProducts),
     path(api_version + 'fetchSpecificNumberofDailyProducts/', fetchSpecificNumberofDailyDealProducts),
