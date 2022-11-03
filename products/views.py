@@ -11,11 +11,9 @@ from rest_framework.permissions import AllowAny, IsAdminUser
  
 @api_view(['GET'])
 def fetchCategories(request, format=None):
-    permission_classes = [AllowAny]
-
     if request.method == 'GET':
         permission_classes = [AllowAny]
-
+        permission_classes.__add__
         #get all categories
         categories = Categories.objects.all()
 
