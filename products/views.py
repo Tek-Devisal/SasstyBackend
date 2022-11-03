@@ -2,14 +2,17 @@ from .models import Categories, Products, SubCategories
 from products.serializers import CategorySerializer, ProductSerializer, SubCategorySerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import permissions
 
 from rest_framework import status
 from random import shuffle
 
-
+from rest_framework.permissions import AllowAny, IsAdminUser
+ 
 @api_view(['GET'])
 def fetchCategories(request, format=None):
     if request.method == 'GET':
+        permission_classes = [AllowAny]
 
         #get all categories
         categories = Categories.objects.all()
