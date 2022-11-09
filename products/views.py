@@ -1,5 +1,5 @@
-from .models import Categories, Products, SubCategories
-from products.serializers import CategorySerializer, ProductSerializer, SubCategorySerializer
+from .models import Categories, Products, SubCategories, Vendors
+from products.serializers import CategorySerializer, ProductSerializer, SubCategorySerializer, VendorSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -131,7 +131,6 @@ def fetchProductForSpecificCategory(request, sub_category_id):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def fetchDailyDealProducts(request, format=None):
-    permission_classes = [AllowAny]
 
     try:
         product = Products.objects.all().filter(show_for=1, status = 1).order_by('?')[:4]
@@ -157,7 +156,6 @@ def fetchSpecificNumberofDailyDealProducts(request, number_of_items, format=None
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def fetchRandomProducts(request, number_of_items, format=None):
-    permission_classes = [AllowAny]
 
     try:
         product = Products.objects.all().filter(status = 1).order_by('?')[:number_of_items]
@@ -183,7 +181,6 @@ def lastestProducts(request, number_of_items, format=None):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def trendingItems(request, number_of_items, format=None):
-    permission_classes = [AllowAny]
 
     try:
         product = Products.objects.all().filter(show_for=3, status = 1).order_by('?')[:number_of_items]
@@ -197,7 +194,6 @@ def trendingItems(request, number_of_items, format=None):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def topRatedProducts(request, number_of_items, format=None):
-    permission_classes = [AllowAny]
 
     try:
         product = Products.objects.all().filter(show_for=4, status = 1).order_by('?')[:number_of_items]
@@ -207,6 +203,19 @@ def topRatedProducts(request, number_of_items, format=None):
     if request.method  == 'GET':
         serializer = ProductSerializer(product, many=True)
         return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def fetchAllVendors(request):
+    try:
+        vendors = Vendors.objects.all().order_by('?')
+    except Vendors.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method  == 'GET':
+        serializer = VendorSerializer(vendors, many=True)
+        return Response(serializer.data)
+
 
 
 # @api_view(['POST'])

@@ -11,7 +11,7 @@ class Cart(models.Model):
     total_amount = models.IntegerField(null=False, default=0)
 
     def __str__(self):
-        return '{} - ({}) {} in cart'.format(self.user, self.quantity, self.product_id.name)
+        return '{} - ({}) {} in cart'.format(self.user_id, self.quantity, self.product_id.name)
 
     class Meta:
         verbose_name = "Cart"

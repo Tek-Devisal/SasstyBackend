@@ -1,6 +1,9 @@
 from dataclasses import field
 from rest_framework import serializers
-from .models import Categories, ProductStatus, Products, ShowProductAs, SubCategories, ProductStatus
+
+from stock.models import Stock
+from stock.serializers import StockSerializer
+from .models import Categories, ProductStatus, Products, ShowProductAs, SubCategories, ProductStatus, Vendors
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,7 +25,15 @@ class ShowProductAsSerializer(serializers.ModelSerializer):
         model = ShowProductAs
         fields = ['id', 'name']
 
+class VendorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vendors
+        fields = ['id', 'shop_name', 'manager_name', 'phone_number', 'location', 'ghana_card']
+
 class ProductSerializer(serializers.ModelSerializer):
+    stock = StockSerializer(many=True, read_only=True)
+    # print(stock)
     class Meta:
         model = Products
-        fields = ['id', 'vendor_id', 'show_for', 'status', 'category_id', 'sub_category_id', 'name', 'description', 'prize', 'discount', 'img_1', 'img_2', 'img_3']
+        fields = ['id', 'vendor_id', 'show_for', 'status', 'category_id', 'sub_category_id', 'name', 'description', 'prize', 'discount', 'img_1', 'img_2', 'img_3', 'stock']
+        

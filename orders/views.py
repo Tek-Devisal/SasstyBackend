@@ -3,9 +3,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from cart.models import Cart
 from cart.serializers import CartSerializer
-from orders.models import DeliveryAddress, Orders
+from orders.models import DeliveryAddress, OrderProducts, Orders
 
-from orders.serializers import DeliveryAddressSerializer, OrderSerializer
+from orders.serializers import DeliveryAddressSerializer, OrderProductSerializer, OrderSerializer
 from rest_framework import status
 
 @api_view(['POST'])
@@ -68,7 +68,7 @@ def setDeliveryAddressAsPrimary(request, address_id):
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# ORDER
+# ORDERd
 @api_view(['POST'])
 def addNewOrder(request, user_id):
     #MOVE ITEM FROM CART TO ORDERS
@@ -90,15 +90,22 @@ def addNewOrder(request, user_id):
             
             serializer = CartSerializer(cart_items, many=True)
             length_cart_items = len(serializer.data)
+            for _ in range (0, length_cart_items):
+                #ADD CART ITEMS TO ORDERS
+                # OrderProducts.objects.create(order_code = the_order, delivery_address_id = request.data['delivery_address_id'],product_id = serializer.data['product_id'], user_id = serializer.data['user_id'], quantity = serializer.data['quantity'], prize = serializer.data['prize'], total_amount = serializer.data['total_amount'])
+                # a.append(serializer.data['product_id'])
+                # order_products_serializer =  OrderProductSerializer(data=serializer.data)
 
-            for items in range (length_cart_items):
-                return Response(items) 
+                # if order_products_serializer.is_valid():
+                #     order_products_serializer.save()
+
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             serializer = OrderSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            addNewOrder(request, user_id)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if serializer.is_valid():
+                serializer.save()
+                addNewOrder(request, user_id)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         #THERE IS NO ORDER
         
@@ -131,3 +138,4 @@ def fetchAllOrders(request):
     if request.method  == 'GET':
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
+        # return Response([{"order":serializer.data[0]['status'], "user":{"id": "45432343-AAA"}}])

@@ -46,10 +46,23 @@ class ShowProductAs(models.Model):
     class Meta:
         verbose_name = "Show Product As"
         verbose_name_plural = "Show Products As"
+class Vendors(models.Model):
+    shop_name = models.CharField(max_length=500, null=False)
+    manager_name = models.CharField(max_length=500, null=False)
+    phone_number = models.CharField(max_length=500, null=False)
+    location = models.CharField(max_length=500, null=False)
+    ghana_card = models.FileField(blank=False, default="", upload_to="documents/vendors/ghanacard")
+
+    def __str__(self):
+        return '{} - {}'.format(self.shop_name, self.location)
+
+    class Meta:
+        verbose_name = "Vendor"
+        verbose_name_plural = "Vendors"
 
 class Products(models.Model):
-    vendor_id = models.IntegerField(null=False)
-    # vendor_id = models.ForeignKey(Categories, on_delete=models.CASCADE, null=False)
+    # vendor_id = models.IntegerField(null=False)
+    vendor_id = models.ForeignKey(Vendors, on_delete=models.CASCADE, null=False, default=0)
     # show_for = models.IntegerField(null=False)
     show_for = models.ForeignKey(ShowProductAs, on_delete=models.CASCADE, null=False)
     status = models.ForeignKey(ProductStatus, on_delete=models.CASCADE, null=False, default = 0)
