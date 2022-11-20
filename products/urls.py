@@ -2,7 +2,7 @@ from xml.etree.ElementInclude import include
 from django.contrib import admin
 from constants import api_version
 from django.urls import path, include
-from products.views import fetchAllVendors, fetchCategories, fetchCategory, fetchProductForSpecificCategory, fetchRandomProducts, fetchSpecificNumberofDailyDealProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchDailyDealProducts, lastestProducts, topRatedProducts, trendingItems, fetchSpecificProduct, fetchAllProduct
+from products.views import addVendor, fetchAllVendors, fetchCategories, fetchCategory, fetchProductForSpecificCategory, fetchRandomProducts, fetchSpecificNumberofDailyDealProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchDailyDealProducts, lastestProducts, topRatedProducts, trendingItems, fetchSpecificProduct, fetchAllProduct
 
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -32,6 +32,8 @@ urlpatterns = [
 
     #VENDORS
     path(api_version + 'fetchAllVendors/', fetchAllVendors),
+    path(api_version + 'addVendor/', addVendor),
+
 
 ]
 

@@ -217,6 +217,19 @@ def fetchAllVendors(request):
         return Response(serializer.data)
 
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def addVendor(request, format=None):
+    if request.method == 'POST':
+
+        serializer = VendorSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 
 # @api_view(['POST'])
 # def addProduct(request, format=None):
