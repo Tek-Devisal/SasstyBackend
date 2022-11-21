@@ -18,6 +18,7 @@ class Register(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = []
 
+
 @api_view(['GET'])
 def fetchAllUsers(request, format=None):
     if request.method == 'GET':

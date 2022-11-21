@@ -17,7 +17,7 @@ urlpatterns = [
     #LOGIN
     path(api_version + 'api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path(api_version + 'api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path(api_version + 'register', Register.as_view(), name='register'),
+    path(api_version + 'register/', Register.as_view(), name='register'),
     path(api_version + 'fetchAllUsers', fetchAllUsers, name='fetchAllUsers'),
 
 ]
