@@ -157,6 +157,26 @@ def fetchSubCategoriesForSpecificCategory(request, id, format=None):
             return Response(serializer.data)
 
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def fetchProductsForSpecificSubSubCategory(request, sub_sub_name, format=None):
+        try:
+            sub_sub_categorys = SubSubCategories.objects.filter(name = sub_sub_name)
+        except SubSubCategories.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        sub_sub_serializer = SubSubCategorySerializer(sub_sub_categorys, many=True)
+        if(len(sub_sub_serializer.data) > 0):
+            sub_sub_category_products = Products.objects.filter(sub_sub_category_id=sub_sub_serializer.data[0]['id'])
+
+            if request.method  == 'GET':
+                serializer = SubCategorySerializer(sub_sub_category_products, many=True)
+                return Response(serializer.data)
+        else:
+            return Response("No such Sub Category")
+
+
+
 #PRODUCTS
 @api_view(['GET'])
 @permission_classes([AllowAny])

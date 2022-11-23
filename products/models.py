@@ -80,6 +80,7 @@ class Products(models.Model):
     status = models.ForeignKey(ProductStatus, on_delete=models.CASCADE, null=False, default = 0)
     category_id = models.ForeignKey(Categories, on_delete=models.CASCADE, null=False)
     sub_category_id =  models.ForeignKey(SubCategories, on_delete=models.CASCADE, null=False)
+    sub_sub_category_id = models.ForeignKey(SubSubCategories, on_delete=models.CASCADE, null=False, default = 0)
     name = models.CharField(max_length=500, null=False)
     description = models.CharField(max_length=1000, null=False)
     prize = models.FloatField(max_length=50, null=False)

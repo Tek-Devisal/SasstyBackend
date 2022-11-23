@@ -46,5 +46,5 @@ class ProductSerializer(serializers.ModelSerializer):
     # print(stock)
     class Meta:
         model = Products
-        fields = ['id', 'vendor_id', 'show_for', 'status', 'category_id', 'sub_category_id', 'name', 'description', 'prize', 'discount', 'img_1', 'img_2', 'img_3', 'img_4', 'img_5', 'img_6','stock']
+        fields = ['id', 'vendor_id', 'show_for', 'status', 'category_id', 'sub_category_id', 'sub_sub_category_id', 'name', 'description', 'prize', 'discount', 'img_1', 'img_2', 'img_3', 'img_4', 'img_5', 'img_6','stock']
         

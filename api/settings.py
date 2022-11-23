@@ -121,6 +121,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'api.wsgi.application'
 
 
