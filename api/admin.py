@@ -1,7 +1,7 @@
 from django.contrib import admin
 from ads.models import Ads
 from cart.models import Cart
-from products.models import Categories, ProductStatus, Products, ShowProductAs, SubCategories, Vendors
+from products.models import Categories, ProductStatus, Products, ShowProductAs, SubCategories, SubSubCategories, Vendors
 from stock.models import Stock
 from orders.models import DeliveryAddress, Ghanaian_Regions, OrderProducts, Orders
 
@@ -9,6 +9,7 @@ from orders.models import DeliveryAddress, Ghanaian_Regions, OrderProducts, Orde
 
 admin.site.register(Categories)
 admin.site.register(SubCategories)
+admin.site.register(SubSubCategories)
 admin.site.register(Products)
 admin.site.register(Stock)
 admin.site.register(ShowProductAs)

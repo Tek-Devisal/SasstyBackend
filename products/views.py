@@ -1,5 +1,6 @@
-from .models import Categories, Products, SubCategories, Vendors
-from products.serializers import CategorySerializer, ProductSerializer, SubCategorySerializer, VendorSerializer
+import json
+from .models import Categories, Products, SubCategories, SubSubCategories, Vendors
+from products.serializers import CategorySerializer, MenuSubCategorySerializer, ProductSerializer, SubCategorySerializer, SubSubCategorySerializer, VendorSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -7,7 +8,21 @@ from rest_framework import status
 from random import shuffle
 
 from rest_framework.permissions import AllowAny
- 
+from django.db.models import Q
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def search(request, search_query, format=None):
+        try:
+            products = Products.objects.filter(Q(description__icontains=search_query))
+        except Products.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if request.method  == 'GET':
+            serializer = ProductSerializer(products)
+            return Response(serializer.data)
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def fetchCategories(request, format=None):
@@ -34,6 +49,60 @@ def fetchCategory(request, id, format=None):
         if request.method  == 'GET':
             serializer = CategorySerializer(category)
             return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def fetchForMenu(request, category_id, format=None):
+        try:
+            sub_cat = SubCategories.objects.filter(category_id = category_id)
+        except SubCategories.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if request.method  == 'GET':
+            serializer = SubCategorySerializer(sub_cat, many=True)
+
+            for subs in range(len(serializer.data)):
+                sub_sub_categories = SubSubCategories.objects.filter(sub_category_id = serializer.data[subs]['id'])
+
+                sub_sub_categories_serializer = SubSubCategorySerializer(sub_sub_categories, many=True)
+               
+                serializer.data[subs]['data'] = sub_sub_categories_serializer.data
+
+            return Response(serializer.data)
+
+
+
+# @api_view(['GET'])
+# @permission_classes([AllowAny])
+# def fetchAllCategories(request, format=None):
+#     if request.method == 'GET':
+
+#         res = {}
+       
+#         #get all categories
+#         categories = Categories.objects.all()
+
+#         #serialize categories
+#         serializer = CategorySerializer(categories, many=True)
+
+#         # print(serializer)
+#         for sub_cats in range(len(serializer.data)):
+#             sub_categories = SubCategories.objects.filter(category_id = serializer.data[sub_cats]['id'])
+
+#             sub_categories_serializer = SubCategorySerializer(sub_categories, many=True)
+
+#             for sub_sub in range(len(sub_categories_serializer.data)):
+#                 sub_sub_categories = SubSubCategories.objects.filter(sub_category_id = sub_categories_serializer.data[sub_sub]['id'])
+
+#                 sub_sub_categories_serializer = SubSubCategorySerializer(sub_sub_categories, many=True)
+#                 sub_categories_serializer.data[sub_sub]['sub_sub'] = sub_sub_categories_serializer.data
+#                 # print(sub_sub_categories_serializer.data)
+                
+#             res[serializer.data[sub_cats]['name']] = sub_categories_serializer.data
+#                 # res['data'] = sub_sub_categories_serializer.data
+
+#         #return json
+#         return Response(res)
 
 
 # @api_view(['POST'])

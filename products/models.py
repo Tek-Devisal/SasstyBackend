@@ -28,6 +28,18 @@ class SubCategories(models.Model):
         verbose_name = "Sub Category"
         verbose_name_plural = "Sub Categories"
 
+class SubSubCategories(models.Model):
+    # category_id = models.IntegerField(null=False)
+    sub_category_id = models.ForeignKey(SubCategories, on_delete=models.CASCADE, null=False)
+    name = models.CharField(max_length=500, null=False)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name = "Sub Sub Category"
+        verbose_name_plural = "Sub Sub Categories"
+
+
 class ProductStatus(models.Model):
     name = models.CharField(max_length=500, null=False)
 
@@ -75,6 +87,10 @@ class Products(models.Model):
     img_1 = models.ImageField(blank=False, default="", upload_to="images/products/")
     img_2 = models.ImageField(blank=True, default="", upload_to="images/products/")
     img_3 = models.ImageField(blank=True, default="", upload_to="images/products/")
+    img_4 = models.ImageField(blank=True, default="", upload_to="images/products/")
+    img_5 = models.ImageField(blank=True, default="", upload_to="images/products/")
+    img_6 = models.ImageField(blank=True, default="", upload_to="images/products/")
+
 
     def __str__(self):
         return '{} - {}'.format(self.pk, self.name)
