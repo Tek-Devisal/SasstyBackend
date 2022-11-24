@@ -173,7 +173,7 @@ def fetchProductsForSpecificSubSubCategory(request, sub_sub_ref_id, format=None)
             sub_sub_category_products = Products.objects.filter(sub_sub_category_id=sub_sub_serializer.data[0]['id'])
 
             if request.method  == 'GET':
-                serializer = SubCategorySerializer(sub_sub_category_products, many=True)
+                serializer = ProductSerializer(sub_sub_category_products, many=True)
                 return Response(serializer.data)
         else:
             return Response("No such Sub Category")
