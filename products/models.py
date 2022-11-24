@@ -4,6 +4,8 @@ from tabnanny import verbose
 from django.db import models
 from django.contrib import admin
 
+from functions import generate_id
+
 class Categories(models.Model):
     # id = models.BigAutoField(max_length=10, primary_key=True)
     # ref = models.CharField(max_length=10,default=generate_id(8, "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"))
@@ -31,6 +33,7 @@ class SubCategories(models.Model):
 class SubSubCategories(models.Model):
     # category_id = models.IntegerField(null=False)
     sub_category_id = models.ForeignKey(SubCategories, on_delete=models.CASCADE, null=False)
+    ref_code = models.CharField(max_length=500, default=generate_id(8))
     name = models.CharField(max_length=500, null=False)
 
     def __str__(self):

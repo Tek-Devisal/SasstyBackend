@@ -9,6 +9,9 @@ from random import shuffle
 
 from rest_framework.permissions import AllowAny
 from django.db.models import Q
+from firebase_admin import credentials, initialize_app, storage
+# from google.cloud import storage
+import requests
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -159,9 +162,9 @@ def fetchSubCategoriesForSpecificCategory(request, id, format=None):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def fetchProductsForSpecificSubSubCategory(request, sub_sub_name, format=None):
+def fetchProductsForSpecificSubSubCategory(request, sub_sub_ref_id, format=None):
         try:
-            sub_sub_categorys = SubSubCategories.objects.filter(name = sub_sub_name)
+            sub_sub_categorys = SubSubCategories.objects.filter(ref_code = sub_sub_ref_id)
         except SubSubCategories.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -330,3 +333,30 @@ def addVendor(request, format=None):
 #             serializer.save()
 
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def uploadFile(request):
+    # Init firebase with your credentials
+    cred = credentials.Certificate("sassty-5b85e-e6d5c4f308c6.json")
+    initialize_app(cred, {'storageBucket': 'sassty-5b85e.appspot.com'})
+
+    # Put your local file path 
+    # fileName = request.data
+    bucket = storage.bucket()
+    # blob = bucket.blob(fileName)
+    # blob.upload_from_filename(fileName)
+
+    # # Opt : if you want to make public access from the URL
+    # blob.make_public()
+
+    # print("your file url", blob.public_url)
+    # return Response(blob.public_url, status=status.HTTP_201_CREATED)
+
+    image_data = str(request.data)
+    blob = bucket.blob(request.data)
+    blob.upload_from_filename(
+            image_data,
+            content_type='image/jpg'
+        )
+    return Response(blob.public_url)
