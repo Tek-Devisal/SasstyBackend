@@ -2,7 +2,7 @@ from xml.etree.ElementInclude import include
 from django.contrib import admin
 from constants import api_version
 from django.urls import path, include
-from products.views import addVendor, fetchAllVendors, fetchCategories, fetchCategory, fetchForMenu, fetchProductForSpecificCategory, fetchProductsForSpecificSubSubCategory, fetchRandomProducts, fetchSpecificNumberofDailyDealProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchDailyDealProducts, lastestProducts, search, topRatedProducts, trendingItems, fetchSpecificProduct, fetchAllProduct
+from products.views import addProduct, addVendor, fetchAllVendors, fetchCategories, fetchCategory, fetchForMenu, fetchProductForSpecificCategory, fetchProductsForSpecificSubSubCategory, fetchRandomProducts, fetchSpecificNumberofDailyDealProducts, fetchSubCategories, fetchSubCategoriesForSpecificCategory, fetchDailyDealProducts, lastestProducts, search, topRatedProducts, trendingItems, fetchSpecificProduct, fetchAllProduct, uploadFile
 
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -19,7 +19,7 @@ urlpatterns = [
     # path(version + 'addSubCategory', addSubCategory),
     path(api_version + 'fetchSubCategories/', fetchSubCategories),
     path(api_version + 'fetchSubCategory/<int:id>', fetchSubCategoriesForSpecificCategory),
-    # path(version + 'addProduct', addProduct),
+    path(api_version + 'addProduct', addProduct),
     path(api_version + 'fetchAllProducts/', fetchAllProduct),
 
     #SEARCH
@@ -40,7 +40,7 @@ urlpatterns = [
     path(api_version + 'addVendor/', addVendor),
 
     #FILE UPLOAD
-    # path(api_version + 'fileupload/', uploadFile),
+    path(api_version + 'fileupload/', uploadFile),
 
 ]
 

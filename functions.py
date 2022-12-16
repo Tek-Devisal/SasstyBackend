@@ -19,3 +19,7 @@ def generate_id(size, chars=string.ascii_uppercase + string.digits):
 
 #     serializer = ProductSerializer(product)
 #     return Response(serializer.name)
+
+def uploadFile(file):
+    print("THE FILE HERE")
+    print(file)
