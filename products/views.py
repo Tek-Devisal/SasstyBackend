@@ -365,6 +365,6 @@ def uploadFile(request):
     blob.upload_from_file(file_obj.file, content_type=file_obj.content_type)
     blob.make_public()
 
-    print("File url", blob.public_url)
+    # print("File url", blob.public_url)
 
-    return Response({'message':'Image uploaded'})
+    return Response({'message':'Image uploaded', 'link':blob.public_url})
