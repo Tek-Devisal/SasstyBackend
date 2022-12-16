@@ -8,7 +8,7 @@ from random import shuffle
 
 from rest_framework.permissions import AllowAny
 from django.db.models import Q
-from firebase_admin import credentials, initialize_app, storage
+# from firebase_admin import credentials, initialize_app, storage
 # from google.cloud import storage
 import requests
 
@@ -321,49 +321,50 @@ def addVendor(request, format=None):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def addProduct(request, format=None):
-    if request.method == 'POST':
-        vendor_id = request.data['vendor_id']
-        show_for = request.data['show_for']
-        status = request.data['status']
-        category_id = request.data['category_id']
-        sub_category_id = request.data['sub_category_id']
-        sub_sub_category_id = request.data['sub_sub_category_id']
-        name = request.data['name']
-        description = request.data['description']
-        prize = request.data['prize']
-        discount = request.data['discount']
-        img_1 = request.data['img_1']
-        img_1_link = 'img-link'
-        save_product = Products.objects.create(vendor_id=vendor_id, show_for=show_for, 
-            status=status, category_id=category_id, sub_category_id=sub_category_id, name=name, description=description, prize=prize, discount=discount, img_1=img_1_link)
-        print(vendor_id)
-        # serializer = ProductSerializer(data=request.data)
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def addProduct(request, format=None):
+#     if request.method == 'POST':
+#         vendor_id = request.data['vendor_id']
+#         show_for = request.data['show_for']
+#         status = request.data['status']
+#         category_id = request.data['category_id']
+#         sub_category_id = request.data['sub_category_id']
+#         sub_sub_category_id = request.data['sub_sub_category_id']
+#         name = request.data['name']
+#         description = request.data['description']
+#         prize = request.data['prize']
+#         discount = request.data['discount']
+#         img_1 = request.data['img_1']
+#         img_1_link = 'img-link'
+#         save_product = Products.objects.create(vendor_id=vendor_id, show_for=show_for, 
+#             status=status, category_id=category_id, sub_category_id=sub_category_id, name=name, 
+#             description=description, prize=prize, discount=discount, img_1=img_1_link)
+#         print(vendor_id)
+#         # serializer = ProductSerializer(data=request.data)
 
-        # if serializer.is_valid():
-        #     serializer.save()
+#         # if serializer.is_valid():
+#         #     serializer.save()
 
-        return Response(save_product, status=status.HTTP_201_CREATED)
+#         return Response(save_product, status=status.HTTP_201_CREATED)
 
-# Init firebase with your credentials
-cred = credentials.Certificate("sassty-5b85e-e6d5c4f308c6.json")
-initialize_app(cred, {'storageBucket': 'sassty-5b85e.appspot.com'})
+# # Init firebase with your credentials
+# cred = credentials.Certificate("sassty-5b85e-e6d5c4f308c6.json")
+# initialize_app(cred, {'storageBucket': 'sassty-5b85e.appspot.com'})
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def uploadFile(request):
-    bucket = storage.bucket() # storage bucket
-    data = request.data
-    if(type(data)!=dict):
-        data=data.dict()
-    file_obj=data['image']
-    fileName=file_obj.name
-    blob=bucket.blob("images/"+fileName)
-    blob.upload_from_file(file_obj.file, content_type=file_obj.content_type)
-    blob.make_public()
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def uploadFile(request):
+#     bucket = storage.bucket() # storage bucket
+#     data = request.data
+#     if(type(data)!=dict):
+#         data=data.dict()
+#     file_obj=data['image']
+#     fileName=file_obj.name
+#     blob=bucket.blob("images/"+fileName)
+#     blob.upload_from_file(file_obj.file, content_type=file_obj.content_type)
+#     blob.make_public()
 
-    # print("File url", blob.public_url)
+#     # print("File url", blob.public_url)
 
-    return Response({'message':'Image uploaded', 'link':blob.public_url})
+#     return Response({'message':'Image uploaded', 'link':blob.public_url})
