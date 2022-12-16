@@ -8,7 +8,6 @@ from random import shuffle
 
 from rest_framework.permissions import AllowAny
 from django.db.models import Q
-import firebase_admin
 from firebase_admin import credentials, initialize_app, storage
 # from google.cloud import storage
 import requests
